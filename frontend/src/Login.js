@@ -39,20 +39,21 @@ function Login (){
     }
 
     return (
-        <div className="d-flex justify-content-center align-items-center bg-black vh-100">
+        <div className="d-flex justify-content-between align-items-center bg-black vh-100">
             {/* Left Side - Picture */}
-            <div className="left-panel">
+            <div className="left-panel ml-5">
                 <img
-                    src="https://pbs.twimg.com/profile_images/1683498543967879173/EHRSRyrp_400x400.jpg"  
+                    src="https://pbs.twimg.com/profile_images/1683498543967879173/EHRSRyrp_400x400.jpg"
                     alt="Login Background"
                     className="img-fluid"
+                    style={{ width: '500px', height: '500px' }}
                 />
             </div>
 
             {/*  Login Form */}
-            <div className="right-panel bg-white p-3 rounded w-25">
-                <h2>Login Form</h2>
-                <form action="" onSubmit={handleSubmit}>
+            <div className="right-panel bg-white p-3 rounded w-25 mr-5">
+                <h2 className="mb-4">Login Form</h2>
+                <form onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label htmlFor="email"><strong>Email</strong></label>
                         <input type="email" name="email" placeholder="Enter Your Email" onChange={handleInput} className="form-control rounded-0" />
@@ -63,9 +64,9 @@ function Login (){
                         <input type="password" name="password" placeholder="Enter Your Password" onChange={handleInput} className="form-control rounded-0" />
                         {errors.password && <span className="text-danger">{errors.password}</span>}
                     </div>
-                    <button type="submit" className="btn btn-success w-100">Login</button>
-                    <p>You agree to our terms and policies</p>
-                    <Link to="/signup" className="btn btn-default border w-100 bg-light">Create Account</Link>
+                    <button type="submit" className="btn btn-primary w-100 mb-3">Login</button>
+                    <p className="mb-3">You agree to our terms and policies</p>
+                    <Link to="/signup" className="btn btn-light border w-100">Create Account</Link>
                 </form>
             </div>
         </div>
