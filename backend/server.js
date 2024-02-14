@@ -37,9 +37,11 @@ app.post("/signup", (req, res) => {
 
     const query = "INSERT INTO users (name, email, password) VALUES ($1, $2, $3)";
 
+
     client.query(query, values, (err, data) => {
         if (err) {
-            return res.json(err);
+            console.error('Error executing signup query:', err);
+            return res.status(500).json({ error: 'Internal Server Error' });
         }
         return res.json(data);
     });
