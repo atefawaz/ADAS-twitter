@@ -1,4 +1,3 @@
-// sathya is here now 
 const express = require('express');
 const { Client } = require('pg');
 const cors = require('cors');
