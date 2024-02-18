@@ -80,14 +80,15 @@ const EditProfile = ({ setOpen }) => {
   }, [img]);
 
   return (
-    <div className="absolute w-full h-full top-0 left-0 bg-transparent flex items-center justify-center">
-      <div className="w-[600px] h-[600px] bg-slate-200 rounded-lg p-8 flex flex-col gap-4 relative">
-        <button
-          onClick={() => setOpen(false)}
-          className="absolute top-3 right-3 cursor-pointer"
-        >
-          X
-        </button>
+    <div className="absolute inset-0 flex items-center justify-center bg-transparent">
+    <div className="w-[600px] bg-slate-200 rounded-lg p-8 relative">
+      <button
+        onClick={() => setOpen(false)}
+        className="absolute top-3 right-3 cursor-pointer"
+      >
+        X
+      </button>
+      <div className="mb-6">
         <h2 className="font-bold text-xl">Edit Profile</h2>
         <p>Choose a new profile picture</p>
         {imgUploadProgress > 0 ? (
@@ -95,21 +96,26 @@ const EditProfile = ({ setOpen }) => {
         ) : (
           <input
             type="file"
-            className="bg-transparent border border-slate-500 rounded p-2"
+            className="bg-transparent border border-slate-500 rounded p-2 mt-2"
             accept="image/*"
             onChange={(e) => setImg(e.target.files[0])}
           />
         )}
-
-        <p>Delete Account</p>
+      </div>
+      <div className="border-t border-gray-400 pt-6">
+        <h2 className="font-bold text-xl">Delete Account</h2>
+        <p className="text-red-500 mb-2">
+          All your information will be deleted, nothing will be saved !
+        </p>
         <button
-          className="bg-red-500 text-white py-2 rounded-full"
+          className="bg-red-500 text-white py-1 px-3 rounded-full text-sm"
           onClick={handleDelete}
         >
           Delete Account
         </button>
       </div>
     </div>
+  </div>
   );
 };
 
