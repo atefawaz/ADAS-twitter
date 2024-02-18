@@ -47,7 +47,7 @@ const MainTweet = () => {
         />
         <button
           onClick={handleSubmit}
-          className="bg-blue-500 text-white py-2 px-4 rounded-full ml-auto"
+          className="bg-black px-4 py-2 text-white rounded-full"
         >
           Tweet
         </button>
