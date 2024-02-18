@@ -1,5 +1,15 @@
 import mongoose from "mongoose";
 
+const MediaSchema = new mongoose.Schema(
+  {
+    filename: String,
+    contentType: String,
+    data: Buffer,
+    url: String, // Added for storing image URLs
+  },
+  { _id: false }
+);
+
 const TweetSchema = new mongoose.Schema(
   {
     userId: {
@@ -15,6 +25,7 @@ const TweetSchema = new mongoose.Schema(
       type: Array,
       defaultValue: [],
     },
+    media: [MediaSchema], // Array of media objects
   },
   { timestamps: true }
 );

@@ -1,3 +1,5 @@
+// routes/tweet.js
+
 import express from "express";
 import { verifyToken } from "../verifyToken.js";
 import {
@@ -26,6 +28,7 @@ router.get("/timeline/:id", getAllTweets);
 // get user Tweets only
 router.get("/user/all/:id", getUserTweets);
 
-//explore
+// explore
 router.get("/explore", getExploreTweets);
+
 export default router;
