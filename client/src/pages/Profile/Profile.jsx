@@ -15,6 +15,9 @@ const Profile = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [userTweets, setUserTweets] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
+ 
+
+
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -27,6 +30,7 @@ const Profile = () => {
 
         setUserTweets(userTweets.data);
         setUserProfile(userProfile.data);
+
       } catch (err) {
         console.log("error", err);
       }
@@ -71,6 +75,10 @@ const Profile = () => {
               alt="Profile Picture"
               className="w-12 h-12 rounded-full"
             />
+            <div>
+              <p>Followers: </p>
+              <p>Following: </p>
+            </div>
             {currentUser._id === id ? (
               <button
                 className="px-4 -y-2 bg-blue-500 rounded-full text-white"
