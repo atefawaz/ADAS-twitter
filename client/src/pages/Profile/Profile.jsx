@@ -15,8 +15,9 @@ const Profile = () => {
   const { currentUser } = useSelector((state) => state.user);
   const [userTweets, setUserTweets] = useState(null);
   const [userProfile, setUserProfile] = useState(null);
+  const [followersCount, setFollowersCount] = useState(0);
+  const [followingCount, setFollowingCount] = useState(0);
  
-
 
 
   const { id } = useParams();
@@ -27,10 +28,11 @@ const Profile = () => {
       try {
         const userTweets = await axios.get(`/tweets/user/all/${id}`);
         const userProfile = await axios.get(`/users/find/${id}`);
-
+        
         setUserTweets(userTweets.data);
         setUserProfile(userProfile.data);
-
+        setFollowersCount(userProfile.data.followers.length);
+        setFollowingCount(userProfile.data.following.length);
       } catch (err) {
         console.log("error", err);
       }
@@ -75,10 +77,14 @@ const Profile = () => {
               alt="Profile Picture"
               className="w-12 h-12 rounded-full"
             />
-            <div>
-              <p>Followers: </p>
-              <p>Following: </p>
+                    <div className="flex space-x-4">
+            <div className="text-black-600">
+              <span className="font-bold">Followers:</span> {followersCount}
             </div>
+            <div className="text-black-600">
+              <span className="font-bold">Following:</span> {followingCount}
+            </div>
+          </div>
             {currentUser._id === id ? (
               <button
                 className="px-4 -y-2 bg-blue-500 rounded-full text-white"
