@@ -19,6 +19,7 @@ const EditProfile = ({ setOpen }) => {
 
   const [img, setImg] = useState(null);
   const [imgUploadProgress, setImgUploadProgress] = useState(0);
+  const [newUsername, setNewUsername] = useState(currentUser.username); // State to hold new username
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -75,6 +76,25 @@ const EditProfile = ({ setOpen }) => {
     navigate("/signin");
   };
 
+
+
+  const handleUsernameChange = (e) => {
+    setNewUsername(e.target.value); // Update new username 
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedUser = await axios.put(`/users/${currentUser._id}`, {
+        username: newUsername,
+      });
+      dispatch(changeProfile({ ...currentUser, username: newUsername }));
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     img && uploadImg(img);
   }, [img]);
@@ -82,38 +102,58 @@ const EditProfile = ({ setOpen }) => {
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-transparent">
     <div className="w-[600px] bg-slate-200 rounded-lg p-8 relative">
-      <button
-        onClick={() => setOpen(false)}
-        className="absolute top-3 right-3 cursor-pointer"
-      >
+      <button onClick={() => setOpen(false)} className="absolute top-3 right-3 cursor-pointer">
         X
       </button>
-      <div className="mb-6">
-        <h2 className="font-bold text-xl">Edit Profile</h2>
-        <p>Choose a new profile picture</p>
-        {imgUploadProgress > 0 ? (
-          "Uploading " + imgUploadProgress + "%"
-        ) : (
+      <form onSubmit={handleSubmit}>
+        <div className="mb-6">
+          <h2 className="font-bold text-xl">Edit Profile</h2>
+          <p>Choose a new profile picture</p>
+          {imgUploadProgress > 0 ? (
+            "Uploading " + imgUploadProgress + "%"
+          ) : (
+            <input
+              type="file"
+              className="bg-transparent border border-slate-500 rounded p-2 mt-2"
+              accept="image/*"
+              onChange={(e) => setImg(e.target.files[0])}
+            />
+          )}
+        </div>
+        <div className="mb-6">
+          {/* Username input field */}
+          <label htmlFor="username" className="block text-sm font-medium text-gray-700">
+            Choose a new username
+          </label>
           <input
-            type="file"
-            className="bg-transparent border border-slate-500 rounded p-2 mt-2"
-            accept="image/*"
-            onChange={(e) => setImg(e.target.files[0])}
+            type="text"
+            id="username"
+            className="mt-1 p-2 block w-full border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+            value={newUsername}
+            onChange={handleUsernameChange}
           />
-        )}
-      </div>
-      <div className="border-t border-gray-400 pt-6">
-        <h2 className="font-bold text-xl">Delete Account</h2>
-        <p className="text-red-500 mb-2">
-          All your information will be deleted, nothing will be saved !
-        </p>
-        <button
-          className="bg-red-500 text-white py-1 px-3 rounded-full text-sm"
-          onClick={handleDelete}
-        >
-          Delete Account
+          <button
+              type="submit"
+              className="bg-black text-white py-1 px-3 rounded-full text-sm mt-2"
+              >
+              Save Username
         </button>
-      </div>
+
+        </div>
+        <div className="border-t border-gray-400 pt-6">
+          <h2 className="font-bold text-xl">Delete Account</h2>
+          <p className="text-red-500 mb-2">
+            All your information will be deleted, nothing will be saved !
+          </p>
+      
+          <button
+            className="bg-red-500 text-white py-1 px-3 rounded-full text-sm ml-2"
+            onClick={handleDelete}
+          >
+            Delete Account
+          </button>
+        </div>
+      </form>
     </div>
   </div>
   );
