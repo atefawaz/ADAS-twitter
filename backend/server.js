@@ -1,7 +1,7 @@
 const express = require('express');
 const { Client } = require('pg');
 const cors = require('cors');
-// abed is here 
+// Sathya is here 
 const app = express();
 app.use(cors());
 app.use(express.json());
