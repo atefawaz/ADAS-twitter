@@ -1,21 +1,24 @@
 import React, { useState } from "react";
 import TimelineTweet from "../TimelineTweet/TimelineTweet";
-
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 const MainTweet = () => {
   const [tweetText, setTweetText] = useState("");
+  const [imageUrl, setImageUrl] = useState(""); // New state for image URL
 
   const { currentUser } = useSelector((state) => state.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const submitTweet = await axios.post("/tweets", {
+      const tweetData = {
         userId: currentUser._id,
         description: tweetText,
-      });
+        imageUrl: imageUrl, // Include the image URL in the tweet data
+      };
+
+      const submitTweet = await axios.post("/tweets", tweetData);
       window.location.reload(false);
     } catch (err) {
       console.log(err);
@@ -36,6 +39,12 @@ const MainTweet = () => {
           maxLength={280}
           className="bg-slate-200 rounded-lg w-full p-2"
         ></textarea>
+        <input
+          type="text"
+          placeholder="Image URL" // Input for image URL
+          value={imageUrl}
+          onChange={(e) => setImageUrl(e.target.value)}
+        />
         <button
           onClick={handleSubmit}
           className="bg-blue-500 text-white py-2 px-4 rounded-full ml-auto"
